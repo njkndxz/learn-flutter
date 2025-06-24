@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:my_demo/pages/tabs/home.dart';
+import 'package:my_demo/pages/tabs/message.dart';
+import 'package:my_demo/pages/tabs/my.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,17 +33,6 @@ class MyApp extends StatelessWidget {
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        // ---- 全局设置标题栏样式
-        appBarTheme: const AppBarTheme(
-          color: Colors.blue, // 设置标题栏的背景颜色
-          elevation: 4, // 设置标题栏的阴影
-          centerTitle: true,
-          titleTextStyle: TextStyle(
-            color: Colors.white, // 设置标题文字颜色
-            fontSize: 20, // 设置标题文字大小
-            fontWeight: FontWeight.bold, // 设置标题文字的粗细
-          ),
-        ),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -66,18 +58,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  int _currentIndex = 0;
+  final List<Widget> _tabPages = const [HomePage(), Message(), My()];
 
   @override
   Widget build(BuildContext context) {
@@ -96,41 +78,46 @@ class _MyHomePageState extends State<MyHomePage> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
-        // 最上面的标题栏的阴影去掉
-        elevation: 0,
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+      body: _tabPages[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,            // 设置当前选中的tab
+        fixedColor: Colors.green,               // 设置tab选中的颜色
+        iconSize: 25,                           // 设置图标的大小
+        type: BottomNavigationBarType.fixed,    // 如果tab大于3个，则需要设置该属性才能显示
+        items: const [                          // 设置tabbar按钮
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "首页"),
+          BottomNavigationBarItem(icon: Icon(Icons.message), label: "消息"),
+          BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: "我的"),
+        ],
+        onTap: (index) {
+          setState(() {
+            // 点击tabbar按钮的时候触发
+            // 当点击tabbar的时候修改_currentIndex，从而让body部分修改指向的页面，实现切换页面
+            _currentIndex = index;
+          });
+        },
+      ),
+      floatingActionButton: Container( // 这里使用Container包裹，是为了调整FloatingActionButton的大小和微调一下按钮位置
+        height: 60,
+        width: 60,
+        padding: const EdgeInsets.all(2),
+        margin: const EdgeInsets.only(top: 6),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(30)
+        ),
+        child: FloatingActionButton(
+          backgroundColor: _currentIndex == 2 ? Colors.green : Colors.blue, // 这里主要是设置中间按钮的颜色，当选中了tabbar中间的按钮的时候，则将悬浮按钮的颜色改为绿色
+          onPressed: () {
+            setState(() {
+              _currentIndex = 1; // 当点击悬浮按钮的时候，选中发布页面
+            });
+          },
+          child: const Icon(Icons.add),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked, // 设置悬浮按钮的位置
     );
   }
 }
