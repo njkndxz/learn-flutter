@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_demo/pages/tabs/home.dart';
 import 'package:my_demo/pages/tabs/message.dart';
 import 'package:my_demo/pages/tabs/my.dart';
+import 'package:my_demo/routes/router.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,6 +36,16 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      // ---- 3.初始化路由，初始化进入的页面
+      initialRoute: '/',
+      // ---- 2.所有的路由统一配置到这里
+      /* routes: {
+        '/': (context) => const HomePage(),
+        '/search': (context) => const SearchPage(content: '从main_tabs来'),
+        '/message': (context) => const Message(),
+      }, */
+      // 2、调用onGenerateRoute处理
+      onGenerateRoute: onGenerateRoute,
     );
   }
 }
@@ -81,14 +92,18 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: _tabPages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,            // 设置当前选中的tab
-        fixedColor: Colors.green,               // 设置tab选中的颜色
-        iconSize: 25,                           // 设置图标的大小
-        type: BottomNavigationBarType.fixed,    // 如果tab大于3个，则需要设置该属性才能显示
-        items: const [                          // 设置tabbar按钮
+        currentIndex: _currentIndex, // 设置当前选中的tab
+        fixedColor: Colors.green, // 设置tab选中的颜色
+        iconSize: 25, // 设置图标的大小
+        type: BottomNavigationBarType.fixed, // 如果tab大于3个，则需要设置该属性才能显示
+        items: const [
+          // 设置tabbar按钮
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "首页"),
           BottomNavigationBarItem(icon: Icon(Icons.message), label: "消息"),
-          BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: "我的"),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: "我的",
+          ),
         ],
         onTap: (index) {
           setState(() {
@@ -98,17 +113,20 @@ class _MyHomePageState extends State<MyHomePage> {
           });
         },
       ),
-      floatingActionButton: Container( // 这里使用Container包裹，是为了调整FloatingActionButton的大小和微调一下按钮位置
+      floatingActionButton: Container(
+        // 这里使用Container包裹，是为了调整FloatingActionButton的大小和微调一下按钮位置
         height: 60,
         width: 60,
         padding: const EdgeInsets.all(2),
         margin: const EdgeInsets.only(top: 6),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(30)
+          borderRadius: BorderRadius.circular(30),
         ),
         child: FloatingActionButton(
-          backgroundColor: _currentIndex == 2 ? Colors.green : Colors.blue, // 这里主要是设置中间按钮的颜色，当选中了tabbar中间的按钮的时候，则将悬浮按钮的颜色改为绿色
+          backgroundColor: _currentIndex == 2
+              ? Colors.green
+              : Colors.blue, // 这里主要是设置中间按钮的颜色，当选中了tabbar中间的按钮的时候，则将悬浮按钮的颜色改为绿色
           onPressed: () {
             setState(() {
               _currentIndex = 1; // 当点击悬浮按钮的时候，选中发布页面
@@ -117,7 +135,8 @@ class _MyHomePageState extends State<MyHomePage> {
           child: const Icon(Icons.add),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked, // 设置悬浮按钮的位置
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.centerDocked, // 设置悬浮按钮的位置
     );
   }
 }
