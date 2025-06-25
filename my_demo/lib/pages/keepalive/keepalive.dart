@@ -28,7 +28,7 @@ class _KeepaliveState extends State<KeepAliveWrapper>
 
   @override
   // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => widget.keepAlive;
 
   @override
   void didUpdateWidget(covariant KeepAliveWrapper oldWidget) {
