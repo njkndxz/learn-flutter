@@ -104,12 +104,15 @@ class _SilderBoxState extends State<SilderBox> {
   @override
   Widget build(BuildContext context) {
     return SlideTransition(
-      position: widget.animationController.drive(
+      /*  position: widget.animationController.drive(   // animationController.drive方法
         Tween(
           begin: Offset(0.0, 0.0),
           end: Offset(1.0, 0.0),
         ).chain(CurveTween(curve: widget.curve)),
-      ),
+      ), */
+      position: Tween(begin: Offset(0.0, 0.0), end: Offset(1.0, 0.0))     // Tween组件的animate方法
+          .chain(CurveTween(curve: widget.curve))
+          .animate(widget.animationController),
       child: Container(width: 120, height: 60, color: widget.color),
     );
   }
