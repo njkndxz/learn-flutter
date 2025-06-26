@@ -1,4 +1,5 @@
 // import 'package:flutter/material.dart';
+import 'package:my_demo/pages/hero.dart';
 import 'package:my_demo/pages/search.dart';
 import 'package:my_demo/pages/tabs/home.dart';
 import 'package:my_demo/pages/tabs/message.dart';
@@ -9,6 +10,7 @@ final Map routes = {
   '/': (context) => const HomePage(),
   '/search': (context) => const SearchPage(content: '从main_tabs来'),
   '/message': (context) => const Message(),
+  '/hero': (context) => const HeroPage()
 };
 /* 
         首先在 MaterialApp 中去掉 routes 属性，然后添加 onGenerateRoute 属性。
