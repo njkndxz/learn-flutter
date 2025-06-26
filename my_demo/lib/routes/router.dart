@@ -10,7 +10,7 @@ final Map routes = {
   '/': (context) => const HomePage(),
   '/search': (context) => const SearchPage(content: '从main_tabs来'),
   '/message': (context) => const Message(),
-  '/hero': (context) => const HeroPage()
+  '/hero': (context, {arguments}) => HeroPage(arguments: arguments)
 };
 /* 
         首先在 MaterialApp 中去掉 routes 属性，然后添加 onGenerateRoute 属性。
