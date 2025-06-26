@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 // ----1.引入fluttertoast
 import 'package:fluttertoast/fluttertoast.dart';
 
-class Toast extends StatelessWidget {
-  const Toast({super.key});
+class ToastPage extends StatelessWidget {
+  const ToastPage({super.key});
 
   @override
   Widget build(BuildContext context) {
