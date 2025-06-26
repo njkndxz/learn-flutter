@@ -9,33 +9,45 @@ class HeroHome extends StatefulWidget {
 }
 
 class _HeroHomeState extends State<HeroHome> {
-
   List<Widget> _getListData() {
     return listData.map((value) {
       return GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, "/hero", arguments: {"imageUrl":value["imageUrl"]});
+          Navigator.pushNamed(
+            context,
+            "/hero",
+            arguments: {
+              "imageUrl": value["imageUrl"],
+              "initialPage": value["id"],
+              "listData": listData
+            },
+          );
         },
         child: Container(
           decoration: BoxDecoration(
-            border: Border.all(color: const Color.fromRGBO(233, 233, 233, 0.9), width: 1),
+            border: Border.all(
+              color: const Color.fromRGBO(233, 233, 233, 0.9),
+              width: 1,
+            ),
           ),
           child: Column(
             children: <Widget>[
-              Hero(tag: value["imageUrl"], child: Image.network(value["imageUrl"])),
-              const SizedBox(height: 10,),
+              Hero(
+                tag: value["imageUrl"],
+                child: Image.network(value["imageUrl"]),
+              ),
+              const SizedBox(height: 10),
               Text(
                 value['title'],
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 16)
-              )
+                style: const TextStyle(fontSize: 16),
+              ),
             ],
           ),
         ),
       );
     }).toList();
   }
-
 
   @override
   Widget build(BuildContext context) {
