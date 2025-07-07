@@ -13,10 +13,10 @@ final Map routes = {
   '/hero': (context, {arguments}) => HeroPage(arguments: arguments)
 };
 /* 
-        首先在 MaterialApp 中去掉 routes 属性，然后添加 onGenerateRoute 属性。
-        onGenerateRoute 接收的是一个函数，先按照下面的固定写法写就好了。
-        将路由配置提取成一个变量，在 onGenerateRoute 中会用到。
-       */
+  首先在 MaterialApp 中去掉 routes 属性，然后添加 onGenerateRoute 属性。
+  onGenerateRoute 接收的是一个函数，先按照下面的固定写法写就好了。
+  将路由配置提取成一个变量，在 onGenerateRoute 中会用到。
+*/
 var onGenerateRoute = (RouteSettings settings) {
   // name 这里会拿到路由的名称，也就是/search
   final String? name = settings.name;
