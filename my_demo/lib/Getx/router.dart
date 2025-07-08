@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_demo/Getx/GetView/shopBinding.dart';
 import 'package:my_demo/Getx/shopMiddleware.dart';
 import 'package:my_demo/pages/tabs/home.dart';
 import 'package:my_demo/pages/tabs/message.dart';
@@ -31,7 +32,13 @@ class MyApp extends StatelessWidget {
           name: "/message", 
           page: () => const Message(),
           transition: Transition.rightToLeft // 定义切换方式
-        )
+        ),
+        GetPage(
+          name: "/shop", 
+          page: () => const ShopPage(),
+          binding: Shopbinding(), // 路由中绑定Binding
+          middlewares: [ShopMiddleWare()]
+        ),
       ],
     );
   }
